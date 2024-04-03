@@ -2,6 +2,7 @@ package mtorrent
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -18,10 +19,16 @@ const (
 )
 
 var (
-	client    = &http.Client{}
-	endpoint  = "https://test2.m-team.cc"
-	secretKey = ""
+	client       = &http.Client{}
+	endpoint     = "https://test2.m-team.cc"
+	secretKey    = ""
+	HttpStatusOk = fmt.Sprintf("%d %s", http.StatusOK, http.StatusText(http.StatusOK))
 )
+
+type CommonResponse struct {
+	Message string `json:"message"`
+	Code    string `json:"code"`
+}
 
 func postForm(api string, data *map[string]string) (string, []byte, error) {
 	formData := url.Values{}
