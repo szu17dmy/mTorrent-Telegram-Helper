@@ -1,13 +1,13 @@
 package mtorrent
 
 import (
-	"bytes"
 	"encoding/json"
 	"io"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 )
 
 const (
@@ -23,16 +23,28 @@ var (
 	secretKey = ""
 )
 
-func post(api string, form any) (string, []byte, error) {
-	body, err := json.Marshal(form)
+func postForm(api string, data *map[string]string) (string, []byte, error) {
+	formData := url.Values{}
+	for key, value := range *data {
+		formData.Set(key, value)
+	}
+	return post(api, formData.Encode(), "application/x-www-form-urlencoded")
+}
+
+func postJson(api string, form *any) (string, []byte, error) {
+	body, err := json.Marshal(*form)
 	if err != nil {
 		return "", nil, err
 	}
-	req, err := http.NewRequest("POST", endpoint+api, bytes.NewBuffer(body))
+	return post(api, string(body), "application/json")
+}
+
+func post(api, body, contentType string) (string, []byte, error) {
+	req, err := http.NewRequest("POST", endpoint+api, strings.NewReader(body))
 	if err != nil {
 		return "", nil, err
 	}
-	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Content-Type", contentType)
 	req.Header.Set(RequestHeaderSecretKey, secretKey)
 	resp, err := client.Do(req)
 	if err != nil {
