@@ -13,6 +13,7 @@ type Torrent struct {
 	Id       string        `json:"id"`
 	Name     string        `json:"name"`
 	Abstract string        `json:"smallDescr"`
+	Size     int           `json:"size"`
 	Status   TorrentStatus `json:"status"`
 }
 
