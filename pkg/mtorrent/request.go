@@ -31,8 +31,8 @@ func postForm(api string, data *map[string]string) (string, []byte, error) {
 	return post(api, formData.Encode(), "application/x-www-form-urlencoded")
 }
 
-func postJson(api string, form *any) (string, []byte, error) {
-	body, err := json.Marshal(*form)
+func postJson(api string, form any) (string, []byte, error) {
+	body, err := json.Marshal(form)
 	if err != nil {
 		return "", nil, err
 	}
