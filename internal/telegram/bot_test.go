@@ -25,7 +25,7 @@ func TestSendTorrentMessage(t *testing.T) {
 					Id:       "769649",
 					Name:     "Post-graduate Entrance Examination",
 					Abstract: "2023考研资料合集",
-					Size:     1393812756406,
+					Size:     "1393812756406",
 					Status: mt.TorrentStatus{
 						PinExpirationDate: "2024-04-08 00:00:00",
 					},
@@ -65,7 +65,7 @@ func TestSendNSFWTorrentMessage(t *testing.T) {
 					Id:       "769649",
 					Name:     "Post-graduate Entrance Examination",
 					Abstract: "2023考研资料合集",
-					Size:     1393812756406,
+					Size:     "1393812756406",
 					Status: mt.TorrentStatus{
 						PinExpirationDate: "2024-04-08 00:00:00",
 					},

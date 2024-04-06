@@ -59,7 +59,7 @@ func parseTorrent(torrent *mt.Torrent) *Torrent {
 		Id:         torrent.Id,
 		Title:      torrent.Name,
 		Abstract:   torrent.Abstract,
-		Size:       fs.ByteSize(torrent.Size).String(),
+		Size:       fs.Parse(torrent.Size).String(),
 		Expiration: torrent.Status.PinExpirationDate,
 	}
 }
