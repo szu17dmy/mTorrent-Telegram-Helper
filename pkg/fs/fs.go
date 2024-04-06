@@ -1,6 +1,9 @@
 package fs
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type ByteSize float64
 
@@ -15,6 +18,14 @@ const (
 	ZB
 	YB
 )
+
+func Parse(v string) ByteSize {
+	i, err := strconv.ParseInt(v, 10, 64)
+	if err != nil {
+		return 0
+	}
+	return ByteSize(i)
+}
 
 func (b ByteSize) String() string {
 	switch {
