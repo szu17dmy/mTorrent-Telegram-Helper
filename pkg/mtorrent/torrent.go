@@ -13,7 +13,7 @@ type Torrent struct {
 	Id       string        `json:"id"`
 	Name     string        `json:"name"`
 	Abstract string        `json:"smallDescr"`
-	Size     int           `json:"size"`
+	Size     string        `json:"size"`
 	Status   TorrentStatus `json:"status"`
 }
 
@@ -38,7 +38,7 @@ type TorrentSearchResponse struct {
 }
 
 type TorrentSearchResponseData struct {
-	Data []Torrent
+	Data []*Torrent
 }
 
 func TorrentSearch(req *TorrentSearchRequest) (*TorrentSearchResponse, error) {
