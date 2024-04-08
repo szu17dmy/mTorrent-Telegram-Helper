@@ -6,13 +6,15 @@ import (
 	"log"
 	"testing"
 
-	mt "github.com/szu17dmy/mtorrent-telegram-helper/pkg/mtorrent"
+	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/ds"
+	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/model"
 )
 
 func TestSendTorrentMessage(t *testing.T) {
 	type args struct {
-		torrent *mt.Torrent
+		torrent *model.Torrent
 	}
+	date, _ := ds.DateParse("2024-04-08 00:00:00")
 	tests := []struct {
 		name    string
 		args    args
@@ -21,14 +23,12 @@ func TestSendTorrentMessage(t *testing.T) {
 		{
 			name: "Sample",
 			args: args{
-				torrent: &mt.Torrent{
-					Id:       "769649",
-					Name:     "Post-graduate Entrance Examination",
-					Abstract: "2023考研资料合集",
-					Size:     "1393812756406",
-					Status: mt.TorrentStatus{
-						PinExpirationDate: "2024-04-08 00:00:00",
-					},
+				torrent: &model.Torrent{
+					RemoteId:          "769649",
+					Name:              "Post-graduate Entrance Examination",
+					Abstract:          "2023考研资料合集",
+					Size:              "1393812756406",
+					PinExpirationDate: date,
 				},
 			},
 		},
@@ -51,8 +51,9 @@ func TestSendTorrentMessage(t *testing.T) {
 
 func TestSendNSFWTorrentMessage(t *testing.T) {
 	type args struct {
-		torrent *mt.Torrent
+		torrent *model.Torrent
 	}
+	date, _ := ds.DateParse("2024-04-08 00:00:00")
 	tests := []struct {
 		name    string
 		args    args
@@ -61,14 +62,12 @@ func TestSendNSFWTorrentMessage(t *testing.T) {
 		{
 			name: "Sample",
 			args: args{
-				torrent: &mt.Torrent{
-					Id:       "769649",
-					Name:     "Post-graduate Entrance Examination",
-					Abstract: "2023考研资料合集",
-					Size:     "1393812756406",
-					Status: mt.TorrentStatus{
-						PinExpirationDate: "2024-04-08 00:00:00",
-					},
+				torrent: &model.Torrent{
+					RemoteId:          "769649",
+					Name:              "Post-graduate Entrance Examination",
+					Abstract:          "2023考研资料合集",
+					Size:              "1393812756406",
+					PinExpirationDate: date,
 				},
 			},
 		},

@@ -7,7 +7,7 @@ import (
 	"html/template"
 
 	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/fs"
-	mt "github.com/szu17dmy/mtorrent-telegram-helper/pkg/mtorrent"
+	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/model"
 	tg "github.com/szu17dmy/mtorrent-telegram-helper/pkg/telegram"
 
 	"gopkg.in/telebot.v3"
@@ -28,7 +28,7 @@ type Torrent struct {
 	Expiration string
 }
 
-func SendTorrentMessage(torrent *mt.Torrent) (*telebot.Message, error) {
+func SendTorrentMessage(torrent *model.Torrent) (*telebot.Message, error) {
 	tpl, err := template.ParseFS(torrentMessageTemplate, "torrent_message_template.html")
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func SendTorrentMessage(torrent *mt.Torrent) (*telebot.Message, error) {
 	return tg.SendHtml(buf.String())
 }
 
-func SendNSFWTorrentMessage(torrent *mt.Torrent) (*telebot.Message, error) {
+func SendNSFWTorrentMessage(torrent *model.Torrent) (*telebot.Message, error) {
 	tpl, err := template.ParseFS(nsfwTorrentMessageTemplate, "nsfw_torrent_message_template.html")
 	if err != nil {
 		return nil, err
@@ -54,12 +54,12 @@ func SendNSFWTorrentMessage(torrent *mt.Torrent) (*telebot.Message, error) {
 	return tg.SendHtml(buf.String())
 }
 
-func parseTorrent(torrent *mt.Torrent) *Torrent {
+func parseTorrent(torrent *model.Torrent) *Torrent {
 	return &Torrent{
-		Id:         torrent.Id,
+		Id:         torrent.RemoteId,
 		Title:      torrent.Name,
 		Abstract:   torrent.Abstract,
 		Size:       fs.Parse(torrent.Size).String(),
-		Expiration: torrent.Status.PinExpirationDate,
+		Expiration: torrent.PinExpirationDate.String(),
 	}
 }
