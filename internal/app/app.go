@@ -2,6 +2,7 @@ package app
 
 import (
 	"log"
+	"sync"
 	"time"
 
 	"github.com/szu17dmy/mtorrent-telegram-helper/internal/config"
@@ -16,6 +17,10 @@ import (
 
 const (
 	defaultDelaySeconds = 30
+)
+
+var (
+	pushMutex sync.Mutex
 )
 
 type App struct {
@@ -86,6 +91,11 @@ func (a *App) FetchAndSaveTorrents() {
 }
 
 func (a *App) PushMessage() {
+	if !pushMutex.TryLock() {
+		log.Printf("failed to lock push message, another job may be running.")
+		return
+	}
+	defer pushMutex.Unlock()
 	ts := mt.FindNotPushedTorrents(a)
 	if len(ts) == 0 {
 		log.Printf("nothing to push")
