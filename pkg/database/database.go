@@ -14,7 +14,7 @@ type Storage struct {
 }
 
 func New() *Storage {
-	db, err := gorm.Open(sqlite.Open("./sqlite.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("./storage/sqlite.db"), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect database, err: %v", err)
 	}
