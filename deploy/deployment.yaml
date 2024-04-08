@@ -8,6 +8,31 @@ spec: {}
 apiVersion: v1
 kind: Secret
 metadata:
+  name: docker-auths
+  namespace: mt-helper
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: ""
+
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mt-helper-pvc
+  namespace: mt-helper
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
   name: mt-helper
   namespace: mt-helper
 data:
@@ -48,3 +73,12 @@ spec:
         envFrom:
         - secretRef:
             name: mt-helper
+        volumeMounts:
+        - name: storage
+          mountPath: /app/storage
+      imagePullSecrets:
+      - name: docker-auths
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: mt-helper-pvc
