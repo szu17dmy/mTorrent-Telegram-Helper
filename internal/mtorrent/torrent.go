@@ -2,6 +2,7 @@ package mtorrent
 
 import (
 	"log"
+	"strings"
 
 	"github.com/szu17dmy/mtorrent-telegram-helper/internal/config"
 	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/database"
@@ -17,13 +18,14 @@ type Dependency interface {
 
 const (
 	ParamDefaultPageNumber = 1
-	ParamDefaultPageSize   = 50
+	ParamDefaultPageSize   = 100
 	// ParamDefaultVisible 仅活跃的种子=1
-	ParamDefaultVisible = 1
-	ParamModeNormal     = "normal"
-	ParamModeNSFW       = "adult"
-	ParamDiscountFree   = "FREE"
-	ParamPinNormalLevel = 0
+	ParamDefaultVisible    = 1
+	ParamModeNormal        = "normal"
+	ParamModeNSFW          = "adult"
+	ParamDiscountFree      = "FREE"
+	ParamPinNormalLevel    = 0
+	abstractActivityPrefix = "*活動置頂"
 )
 
 func FindNotPushedTorrents(app Dependency) []*model.Torrent {
@@ -96,11 +98,12 @@ func GetFreeAndLargeNSFWTorrents() ([]*mt.Torrent, error) {
 }
 
 func filter(torrents []*mt.Torrent) []*mt.Torrent {
-	return ds.TorrentFilter(torrents, func(torrent *mt.Torrent) bool {
-		return torrent.Status.Discount == ParamDiscountFree &&
-			torrent.Status.Pin != ParamPinNormalLevel &&
-			dateAfterNow(torrent.Status.DiscountExpirationDate) &&
-			dateAfterNow(torrent.Status.PinExpirationDate)
+	return ds.TorrentFilter(torrents, func(t *mt.Torrent) bool {
+		return t.Status.Discount == ParamDiscountFree &&
+			t.Status.Pin != ParamPinNormalLevel &&
+			dateAfterNow(t.Status.DiscountExpirationDate) &&
+			dateAfterNow(t.Status.PinExpirationDate) &&
+			strings.HasPrefix(t.Abstract, abstractActivityPrefix)
 	})
 }
 
