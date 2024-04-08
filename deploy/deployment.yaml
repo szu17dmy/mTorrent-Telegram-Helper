@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: mt-helper
-spec: {}
+spec: { }
 
 ---
 apiVersion: v1
@@ -13,7 +13,6 @@ metadata:
 type: kubernetes.io/dockerconfigjson
 data:
   .dockerconfigjson: ""
-
 
 ---
 apiVersion: v1
@@ -54,31 +53,31 @@ spec:
   selector:
     matchLabels:
       app: mt-helper
-  strategy: {}
+  strategy: { }
   template:
     metadata:
       labels:
         app: mt-helper
     spec:
       containers:
-      - image: mt-helper:latest
-        name: mt-helper
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
-          requests:
-            cpu: 100m
-            memory: 64Mi
-        envFrom:
-        - secretRef:
-            name: mt-helper
-        volumeMounts:
-        - name: storage
-          mountPath: /app/storage
+        - image: mt-helper:latest
+          name: mt-helper
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          envFrom:
+            - secretRef:
+                name: mt-helper
+          volumeMounts:
+            - name: storage
+              mountPath: /app/storage
       imagePullSecrets:
-      - name: docker-auths
+        - name: docker-auths
       volumes:
-      - name: storage
-        persistentVolumeClaim:
-          claimName: mt-helper-pvc
+        - name: storage
+          persistentVolumeClaim:
+            claimName: mt-helper-pvc
