@@ -1,6 +1,12 @@
 FROM golang:1.21.9-bookworm AS builder
 
 WORKDIR /app
+
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
+
 ADD / /app
 
 RUN go build -o ./build/target/helper github.com/szu17dmy/mtorrent-telegram-helper/cmd
