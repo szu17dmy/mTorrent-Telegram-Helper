@@ -15,9 +15,17 @@ func TestDateAfterNow(t *testing.T) {
 		{
 			name: "Case 1",
 			args: args{
-				date: "2006-01-02 15:04:05",
+				date: "2023-01-01 00:00:00",
 			},
 			want:    false,
+			wantErr: false,
+		},
+		{
+			name: "Case 2",
+			args: args{
+				date: "2099-01-01 00:00:00",
+			},
+			want:    true,
 			wantErr: false,
 		},
 	}
