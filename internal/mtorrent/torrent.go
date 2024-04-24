@@ -108,6 +108,9 @@ func filter(torrents []*mt.Torrent) []*mt.Torrent {
 }
 
 func dateAfterNow(date string) bool {
+	if date == "null" {
+		return true
+	}
 	b, err := ds.DateAfterNow(date)
 	if err != nil {
 		log.Printf("failed to parse date, date: %s", date)

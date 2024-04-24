@@ -34,3 +34,43 @@ func TestGetFreeAndLargeNormalTorrents(t *testing.T) {
 		})
 	}
 }
+
+func Test_dateAfterNow(t *testing.T) {
+	type args struct {
+		date string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "Case 1",
+			args: args{
+				date: "null",
+			},
+			want: true,
+		},
+		{
+			name: "Case 2",
+			args: args{
+				date: "2023-01-01 00:00:00",
+			},
+			want: false,
+		},
+		{
+			name: "Case 3",
+			args: args{
+				date: "2099-01-01 00:00:00",
+			},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := dateAfterNow(tt.args.date); got != tt.want {
+				t.Errorf("dateAfterNow() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
