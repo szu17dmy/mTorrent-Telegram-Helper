@@ -6,6 +6,7 @@ import (
 	_ "embed"
 	"html/template"
 
+	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/ds"
 	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/fs"
 	"github.com/szu17dmy/mtorrent-telegram-helper/pkg/model"
 	tg "github.com/szu17dmy/mtorrent-telegram-helper/pkg/telegram"
@@ -55,11 +56,12 @@ func SendNSFWTorrentMessage(torrent *model.Torrent) (*telebot.Message, error) {
 }
 
 func parseTorrent(torrent *model.Torrent) *Torrent {
+	exp := torrent.PinExpirationDate.In(ds.DefaultUpstreamTimezone)
 	return &Torrent{
 		Id:         torrent.RemoteId,
 		Title:      torrent.Name,
 		Abstract:   torrent.Abstract,
 		Size:       fs.Parse(torrent.Size).String(),
-		Expiration: torrent.PinExpirationDate.String(),
+		Expiration: exp.String(),
 	}
 }

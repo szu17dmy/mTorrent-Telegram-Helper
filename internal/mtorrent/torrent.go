@@ -108,7 +108,7 @@ func filter(torrents []*mt.Torrent) []*mt.Torrent {
 }
 
 func dateAfterNow(date string) bool {
-	if date == "null" {
+	if date == "" {
 		return true
 	}
 	b, err := ds.DateAfterNow(date)

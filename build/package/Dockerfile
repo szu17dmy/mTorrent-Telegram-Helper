@@ -13,6 +13,10 @@ RUN go build -o ./build/target/helper github.com/szu17dmy/mtorrent-telegram-help
 
 FROM golang:1.21.9-bookworm
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Shanghai
+RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+
 WORKDIR /app
 COPY --from=builder /app/build/target/helper /app/helper
 
