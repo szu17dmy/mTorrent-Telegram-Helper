@@ -20,7 +20,7 @@ const (
 
 var (
 	client       = &http.Client{}
-	endpoint     = "https://test2.m-team.cc"
+	endpoint     = "https://test2.m-team.cc/api"
 	secretKey    = ""
 	HttpStatusOk = fmt.Sprintf("%d %s", http.StatusOK, http.StatusText(http.StatusOK))
 )

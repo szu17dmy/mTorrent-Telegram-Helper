@@ -19,7 +19,7 @@ func Test_postForm(t *testing.T) {
 		{
 			name: "System/hello",
 			args: args{
-				api:  "/api/system/hello",
+				api:  "/system/hello",
 				data: nil,
 			},
 			want: "200 OK",
@@ -27,7 +27,7 @@ func Test_postForm(t *testing.T) {
 		{
 			name: "System/state",
 			args: args{
-				api:  "/api/system/state",
+				api:  "/system/state",
 				data: nil,
 			},
 			want: "200 OK",
@@ -63,7 +63,7 @@ func Test_postJson(t *testing.T) {
 		{
 			name: "User/bases",
 			args: args{
-				api: "/api/member/bases",
+				api: "/member/bases",
 				form: map[string][]int{
 					"ids": {294703},
 				},

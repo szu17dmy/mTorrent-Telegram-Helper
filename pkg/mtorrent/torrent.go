@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	apiTorrentSearch = "/api/torrent/search"
+	apiTorrentSearch = "/torrent/search"
 )
 
 type Torrent struct {
